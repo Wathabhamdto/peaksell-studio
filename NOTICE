@@ -1,0 +1,22 @@
+PeakSell Studio
+Copyright (C) 2026 PeakSell Agency
+
+PeakSell Studio is a modified version of BrightBean Studio
+(https://github.com/brightbeanxyz/brightbean-studio), forked on 2026-11-11
+from upstream commit 1d11c52. BrightBean Studio is copyright its authors
+and contributors.
+
+Both the original work and this modified version are licensed under the
+GNU Affero General Public License v3.0; see LICENSE. Under AGPL-3.0 section
+13, anyone interacting with a deployed instance over a network is entitled
+to its corresponding source code. The app links to it from the user menu
+("Source code"); set BRAND_SOURCE_URL to the exact repository or commit
+that is deployed.
+
+Changes from upstream: white-label branding (settings.BRAND, the {% brand %}
+template tag), PeakSell name, logo, colors (Magenta #FF2D8C / Navy #0E122B)
+and fonts (Poppins, Inter; SIL Open Font License 1.1, see static/fonts/).
+
+"BrightBean" is a name of its upstream authors and is used here only to
+attribute the original work. The PeakSell name and logo are not licensed
+under AGPL-3.0 and may not be reused without permission.

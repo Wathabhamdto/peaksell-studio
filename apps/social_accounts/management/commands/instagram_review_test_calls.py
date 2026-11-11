@@ -28,8 +28,8 @@ from datetime import timedelta
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
 
-DEFAULT_CAPTION = "BrightBean App Review test post — please ignore."
-DEFAULT_COMMENT = "BrightBean App Review test comment."
+DEFAULT_CAPTION = "PeakSell App Review test post — please ignore."
+DEFAULT_COMMENT = "PeakSell App Review test comment."
 
 
 class Command(BaseCommand):

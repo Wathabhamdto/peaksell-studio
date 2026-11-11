@@ -229,7 +229,7 @@ def test_youtube_dashboard_ignores_legacy_account_estimates(owner_client, worksp
 
     assert response.context["engagement"] is None
     assert "Engagement rate" not in body
-    assert "Daily average · calculated by BrightBean" not in body
+    assert "Daily average · calculated by PeakSell" not in body
     assert "Metrics reported by YouTube" in body
     assert all(not card["derived"].available for card in response.context["hero_cards"])
 
@@ -257,7 +257,7 @@ def test_youtube_daily_counts_are_not_reconstructed_from_lifetime_snapshots(owne
     response = owner_client.get(_account_url(workspace, account) + "?range=7")
     body = response.content.decode()
 
-    assert "Estimated by BrightBean from per-video counts" not in body
+    assert "Estimated by PeakSell from per-video counts" not in body
     assert response.context["chart"]["derived"].estimated is False
     assert response.context["chart"]["derived"].available is False
     # Today has no snapshot yet: a gap in the chart, not a drop to zero views.

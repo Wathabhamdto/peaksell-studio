@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Brightbean{% endblock %}</title>
+    <title>{% block title %}{% brand "name" %}{% endblock %}</title>
     <link rel="icon" href="{% static 'favicon/favicon.ico' %}" sizes="any">
     <link rel="icon" type="image/svg+xml" href="{% static 'favicon/favicon.svg' %}">
     <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
@@ -182,7 +182,7 @@
         .idea-selected-tags .idea-tag-chip {
             display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: 9999px;
             font-size: 0.6875rem; font-weight: 600;
-            background: var(--primary-soft, #FFF7ED); color: var(--primary, #C2410C); border: 1px solid var(--primary-muted, #FED7AA);
+            background: var(--primary-soft, #FFF0F7); color: var(--primary, #BF0D63); border: 1px solid var(--primary-muted, #FFC2DF);
         }
         .idea-selected-tags .idea-tag-chip button {
             display: flex; align-items: center; justify-content: center;
@@ -316,8 +316,8 @@
                     {% endif %}
                     <span class="flex-1 font-bold text-[0.9375rem] tracking-tight text-stone-900 truncate" x-show="!sidebarCollapsed" x-cloak>{{ sidebar_workspaces.0.name }}</span>
                     {% else %}
-                    <div class="sidebar-logo-mark flex-shrink-0">P</div>
-                    <span class="flex-1 font-bold text-[0.9375rem] tracking-tight text-stone-900 truncate" x-show="!sidebarCollapsed" x-cloak>Brightbean</span>
+                    <img src="{% brand "logo" as brand_logo %}{% static brand_logo %}" alt="" class="sidebar-logo-mark flex-shrink-0 object-contain bg-white">
+                    <span class="flex-1 font-bold text-[0.9375rem] tracking-tight text-stone-900 truncate" x-show="!sidebarCollapsed" x-cloak>{% brand "name" %}</span>
                     {% endif %}
                     {% endwith %}
                     <svg class="w-4 h-4 text-stone-400 flex-shrink-0 transition-transform" :class="wsOpen && 'rotate-180'" x-show="!sidebarCollapsed" x-cloak fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -870,6 +870,13 @@
                             Log out
                         </a>
                     </div>
+
+                    {# AGPL-3.0 §13: offer the running code's source to every network user. #}
+                    <div class="border-t border-stone-100 px-4 py-2.5 text-[11px] leading-snug text-stone-400">
+                        <a href="{% brand "source_url" %}" target="_blank" rel="noopener" class="underline hover:text-stone-600">Source code</a>
+                        · AGPL-3.0 · based on
+                        <a href="{% brand "upstream_url" %}" target="_blank" rel="noopener" class="underline hover:text-stone-600">{% brand "upstream_name" %}</a>
+                    </div>
                 </div>
             </div>
         </aside>
@@ -897,8 +904,8 @@
                     {% endif %}
                     <span class="text-sm font-semibold text-stone-800 truncate max-w-[160px]">{{ current_ws.name }}</span>
                     {% else %}
-                    <div class="w-7 h-7 rounded-md flex items-center justify-center text-white text-[11px] font-bold" style="background: var(--primary);">P</div>
-                    <span class="text-sm font-semibold text-stone-800">Brightbean</span>
+                    <img src="{% brand "logo" as brand_logo %}{% static brand_logo %}" alt="" class="w-7 h-7 rounded-md object-contain bg-white">
+                    <span class="text-sm font-semibold text-stone-800">{% brand "name" %}</span>
                     {% endif %}
                     {% endwith %}
                 </div>
@@ -1004,7 +1011,7 @@
                 data = JSON.parse(canvas.dataset.series || '[]');
                 labels = JSON.parse(canvas.dataset.labels || '[]');
             } catch (e) { return; }
-            var color = '#F97316';
+            var color = '#FF2D8C';
             if (window._bbHeroChart) { window._bbHeroChart.destroy(); }
             var ctx = canvas.getContext('2d');
             var gradient = ctx.createLinearGradient(0, 0, 0, 260);

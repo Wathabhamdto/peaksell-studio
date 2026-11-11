@@ -144,15 +144,17 @@ class MastodonProvider(SocialProvider):
         Returns a dict with ``client_id`` and ``client_secret``.
         This only needs to be called once per instance.
         """
+        from django.conf import settings
+
         url = f"{instance_url.rstrip('/')}/api/v1/apps"
         resp = self._request(
             "POST",
             url,
             json={
-                "client_name": "Brightbean",
+                "client_name": settings.BRAND["name"],
                 "redirect_uris": redirect_uri,
                 "scopes": " ".join(self.required_scopes),
-                "website": "https://brightbean.xyz",
+                "website": settings.BRAND["website"],
             },
         )
         data = resp.json()

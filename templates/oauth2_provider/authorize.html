@@ -1,18 +1,19 @@
 {% extends "oauth2_provider/base.html" %}
 {% load i18n static %}
 
-{% block title %}Authorize {{ application.name|default:"an app" }} · BrightBean Studio{% endblock title %}
+{% block title %}Authorize {{ application.name|default:"an app" }} · {% brand "product_name" %}{% endblock title %}
 
 {% block content %}
     <div class="bb-head">
-        <img src="{% static 'img/brightbean-studio-logo.webp' %}" alt="BrightBean Studio" class="bb-logo">
-        <span class="bb-eyebrow">BrightBean · Studio</span>
+        <img src="{% brand "logo" as brand_logo %}{% static brand_logo %}" alt="{% brand "product_name" %}" class="bb-logo">
+        <span class="bb-eyebrow">{% brand "name" %} · Studio</span>
     </div>
 
     <div class="bb-card">
         {% if not error %}
             <h1>{% blocktrans with name=application.name|default:"This application" %}Authorize {{ name }}?{% endblocktrans %}</h1>
-            <p>{% blocktrans with name=application.name|default:"This application" %}{{ name }} wants to connect to your BrightBean Studio workspace with the following permissions:{% endblocktrans %}</p>
+            {% brand "product_name" as product %}
+            <p>{% blocktrans with name=application.name|default:"This application" %}{{ name }} wants to connect to your {{ product }} workspace with the following permissions:{% endblocktrans %}</p>
 
             <form id="authorizationForm" method="post">
                 {% csrf_token %}
@@ -42,7 +43,7 @@
                 </div>
             </form>
 
-            <p class="bb-foot">{% trans "You can revoke this access at any time from BrightBean Studio." %}</p>
+            <p class="bb-foot">{% blocktrans %}You can revoke this access at any time from {{ product }}.{% endblocktrans %}</p>
         {% else %}
             <h1>{% trans "Something went wrong" %}</h1>
             <p>{{ error.error }}</p>

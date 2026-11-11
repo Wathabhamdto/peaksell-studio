@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Intelligence - {{ organization.name }} - Brightbean{% endblock %}
+{% block title %}Intelligence - {{ organization.name }} - {% brand "name" %}{% endblock %}
 
 {% block page_header %}
 <div class="flex flex-wrap items-center justify-between gap-3 mb-4 lg:mb-[25px]">
@@ -180,7 +180,7 @@
     .intel-input:focus {
         background: white;
         border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+        box-shadow: 0 0 0 3px rgba(255,45,140, 0.15);
     }
     .intel-label {
         display: block;
@@ -218,13 +218,13 @@
         transform: translateY(-1px);
     }
     .intel-submit:disabled {
-        background: var(--primary-muted, #fed7aa);
+        background: var(--primary-muted, #FFC2DF);
         cursor: not-allowed;
         transform: none;
         box-shadow: none;
     }
     .intel-submit:disabled:hover {
-        background: var(--primary-muted, #fed7aa);
+        background: var(--primary-muted, #FFC2DF);
         transform: none;
     }
     /* Helper note rendered under the disabled CTA when the org is in
@@ -246,7 +246,7 @@
         color: var(--primary);
         font-weight: 600;
         text-decoration: none;
-        border-bottom: 1px solid var(--primary-muted, #fed7aa);
+        border-bottom: 1px solid var(--primary-muted, #FFC2DF);
         transition: border-color 150ms ease;
     }
     .intel-activate-note a:hover {

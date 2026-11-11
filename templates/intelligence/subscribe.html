@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load intelligence_extras humanize %}
 
-{% block title %}Activate Intelligence - {{ organization.name }} - Brightbean{% endblock %}
+{% block title %}Activate Intelligence - {{ organization.name }} - {% brand "name" %}{% endblock %}
 
 {% block page_header %}
 <div class="flex items-start justify-between gap-4 mb-4 lg:mb-[25px]">
@@ -27,7 +27,7 @@
     {% if resumable_attempt %}
     {% comment %} Resume CTA, a teammate started checkout already. {% endcomment %}
     <div class="mb-6 p-4 rounded-xl border-l-4 flex items-start gap-3"
-         style="border-color: var(--primary); background: var(--primary-soft, #fff7ed);">
+         style="border-color: var(--primary); background: var(--primary-soft, #FFF0F7);">
         <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         <div class="flex-1 min-w-0">
             <h2 class="text-sm font-semibold" style="color: var(--primary);">Resume your checkout</h2>
@@ -104,7 +104,7 @@
                            class="sr-only" required{% if forloop.counter == 2 %} checked{% endif %}>
                     {% if forloop.counter == 2 %}
                     <span class="absolute -top-2.5 right-4 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide"
-                          style="background: var(--primary); color: white; box-shadow: 0 2px 6px rgba(249, 115, 22, 0.3);">
+                          style="background: var(--primary); color: white; box-shadow: 0 2px 6px rgba(255,45,140, 0.3);">
                         Most popular
                     </span>
                     {% endif %}
@@ -212,11 +212,11 @@
        not include the specific combinations used here.
     */
     .plan-card:hover {
-        border-color: var(--primary-muted, #fed7aa) !important;
+        border-color: var(--primary-muted, #FFC2DF) !important;
     }
     label.plan-card:has(> input[type="radio"]:checked) {
         border-color: var(--primary) !important;
-        background: var(--primary-soft, #fff7ed);
+        background: var(--primary-soft, #FFF0F7);
     }
     label.plan-card:has(> input[type="radio"]:checked) .plan-card-check {
         border-color: var(--primary);
@@ -226,7 +226,7 @@
         display: block !important;
     }
     label.plan-card[data-popular="1"] {
-        box-shadow: 0 4px 16px rgba(249, 115, 22, 0.10);
+        box-shadow: 0 4px 16px rgba(255,45,140, 0.10);
     }
 </style>
 {% endblock %}

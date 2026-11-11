@@ -22,6 +22,27 @@ DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 APP_URL = env("APP_URL")
 
+# White-label brand. Everything user-facing (page titles, logos, emails, the
+# OAuth consent screen, the MCP server name) reads from here, so a client
+# deployment can be rebranded from env vars without touching templates.
+# AGPL-3.0 §13: ``source_url`` must point at the source of the code actually
+# running, and is linked from the app footer.
+BRAND = {
+    "name": env("BRAND_NAME", default="PeakSell"),
+    "product_name": env("BRAND_PRODUCT_NAME", default="PeakSell Studio"),
+    "slug": env("BRAND_SLUG", default="peaksell-studio"),
+    "logo": env("BRAND_LOGO", default="img/peaksell-logo.png"),
+    "website": env("BRAND_WEBSITE", default="https://www.peaksell.agency"),
+    "support_email": env("BRAND_SUPPORT_EMAIL", default="support@peaksell.agency"),
+    "terms_url": env("BRAND_TERMS_URL", default="https://www.peaksell.agency/terms-of-service/"),
+    "privacy_url": env("BRAND_PRIVACY_URL", default="https://www.peaksell.agency/privacy-policy/"),
+    # Empty hides the "Enjoying ...? Leave a review" banner.
+    "review_url": env("BRAND_REVIEW_URL", default=""),
+    "source_url": env("BRAND_SOURCE_URL", default="https://github.com/Wathabhamdto/peaksell-studio"),
+    "upstream_name": "BrightBean Studio",
+    "upstream_url": "https://github.com/Wathabhamdto/peaksell-studio",
+}
+
 # Application definition
 
 DJANGO_APPS = [
@@ -117,6 +138,9 @@ TEMPLATES = [
                 "apps.onboarding.context_processors.onboarding_checklist",
                 "apps.intelligence.context_processors.intelligence_flag",
             ],
+            # ``{% brand "name" %}`` etc. in every template, including emails
+            # rendered without a request.
+            "builtins": ["apps.common.templatetags.branding"],
         },
     },
 ]
@@ -166,7 +190,7 @@ else:
 
 # Database
 DATABASES = {
-    "default": env.db("DATABASE_URL", default="postgres://postgres:postgres@localhost:5432/brightbean"),
+    "default": env.db("DATABASE_URL", default="postgres://postgres:postgres@localhost:5432/peaksell"),
 }
 
 # Custom user model
@@ -684,7 +708,7 @@ MCP_PUBLIC_BASE_URL = env("MCP_PUBLIC_BASE_URL", default=APP_URL).rstrip("/")
 MCP_OAUTH_ISSUER_URL = env("MCP_OAUTH_ISSUER_URL", default=APP_URL).rstrip("/")
 
 OAUTH2_PROVIDER = {
-    "SCOPES": {"mcp": "Call BrightBean Studio MCP tools on your behalf"},
+    "SCOPES": {"mcp": f"Call {BRAND['product_name']} MCP tools on your behalf"},
     "DEFAULT_SCOPES": ["mcp"],
     "PKCE_REQUIRED": True,
     # Restrict ``code_challenge_method`` to ``S256``. django-oauth-toolkit

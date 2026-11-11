@@ -1,23 +1,26 @@
 <p align="center">
-  <a href="https://github.com/brightbeanxyz/brightbean-studio">
-    <img src=".github/assets/brightbean-studio-logo.webp" alt="BrightBean Studio" width="280">
-  </a>
+  <img src=".github/assets/peaksell-logo.png" alt="PeakSell Studio" width="140">
 </p>
 
 <p align="center">
-  <strong>Open-source social media management for creators, agencies, and SMBs.</strong>
+  <strong>PeakSell Studio — PeakSell Agency's self-hosted social media distribution platform.</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/brightbeanxyz/brightbean-studio/actions/workflows/ci.yml"><img src="https://github.com/brightbeanxyz/brightbean-studio/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0-blue.svg" alt="License: AGPL-3.0"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.12%2B-blue.svg" alt="Python 3.12+"></a>
   <a href="https://www.djangoproject.com/"><img src="https://img.shields.io/badge/Django-5.x-green.svg" alt="Django 5.x"></a>
 </p>
 
-<p align="center">
-  <a href="https://brightbean.xyz/studio/"><img src="https://img.shields.io/badge/Free%20hosted%20version-brightbean.xyz%2Fstudio-FFB300?style=for-the-badge" alt="Free hosted version at brightbean.xyz/studio"></a>
-</p>
+## About this fork
+
+PeakSell Studio is a fork of [BrightBean Studio](https://github.com/brightbeanxyz/brightbean-studio) (AGPL-3.0), rebranded for PeakSell Agency. See [NOTICE](NOTICE) for attribution and what changed.
+
+- **Branding is configurable.** Everything user-facing reads from `settings.BRAND` (env vars `BRAND_*`, see `.env.example`), so client deployments can be white-labelled without code changes.
+- **Pulling upstream fixes:** `git fetch upstream && git merge upstream/main`. Internal identifiers (encryption salts, API key prefix `bb_studio_`, DB table names, API field `calculated_by_brightbean`) were deliberately left unchanged so existing data stays readable and merges stay small.
+- **AGPL-3.0:** a deployed instance must offer its source to users. The app links to `BRAND_SOURCE_URL` from the user menu.
+
+The rest of this README is the upstream documentation and applies unchanged.
 
 ---
 

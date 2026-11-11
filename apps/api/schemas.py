@@ -490,7 +490,7 @@ class DerivedMetricResponse(Schema):
     delta: float = Field(
         ...,
         description=(
-            "Percent change vs. the previous equal-length window, calculated by BrightBean. "
+            "Percent change vs. the previous equal-length window, calculated by PeakSell. "
             "``0.0`` when there is no prior baseline."
         ),
     )
@@ -504,16 +504,16 @@ class DerivedMetricResponse(Schema):
     calculated_by_brightbean: bool = Field(
         False,
         description=(
-            "``true`` when BrightBean calculated ``value`` rather than the platform reporting it: the "
+            "``true`` when PeakSell calculated ``value`` rather than the platform reporting it: the "
             "engagement rate, daily averages, and estimates on supported platforms. "
             "Disclosure does not permit prohibited derived metrics. YouTube values are native reports."
         ),
     )
-    averaged: bool = Field(False, description="``value`` is BrightBean's average of the platform's daily figures.")
+    averaged: bool = Field(False, description="``value`` is PeakSell's average of the platform's daily figures.")
     estimated: bool = Field(
         False,
         description=(
-            "``value`` was estimated by BrightBean from other counts — summed per-post deltas when the "
+            "``value`` was estimated by PeakSell from other counts — summed per-post deltas when the "
             "platform's account-level analytics weren't available or were older, or differences between "
             "follower totals."
         ),
@@ -524,7 +524,7 @@ class DerivedMetricResponse(Schema):
     def from_derived(
         cls, key: str, label: str, derived: DerivedMetric, *, calculated: bool = False
     ) -> DerivedMetricResponse:
-        """``calculated`` marks a value BrightBean always computes (the
+        """``calculated`` marks a value PeakSell always computes (the
         engagement rate), on top of what ``derived`` records about itself."""
         return cls(
             key=key,
@@ -544,7 +544,7 @@ class EngagementCardResponse(Schema):
     rate: DerivedMetricResponse = Field(
         ...,
         description=(
-            "Engagement rate = sum(parts) / denom * 100, calculated by BrightBean. The denom is the "
+            "Engagement rate = sum(parts) / denom * 100, calculated by PeakSell. The denom is the "
             "first of ``views, reach, impressions, plays`` with data, falling back to the follower count."
         ),
     )

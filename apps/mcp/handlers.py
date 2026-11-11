@@ -1153,7 +1153,7 @@ register_tool(
             "and follower growth. Each metric is returned as ``{value, delta, series, kind}`` "
             "where ``delta`` is the percent change vs. the prior equal-length window and "
             "``series`` is the daily sparkline. Metrics with ``calculated_by_brightbean: true`` (the "
-            "engagement rate, daily averages, estimates) and every ``delta`` are calculated by BrightBean, "
+            "engagement rate, daily averages, estimates) and every ``delta`` are calculated by PeakSell, "
             "not reported by the platform; say so when showing them to a user. Includes ``captured_at`` and ``next_sync_eta`` "
             "YouTube uses native period reports, separate raw count cards, ``engagement: null``, Pacific reporting-period metadata "
             "and ``comparison_available``. Missing numeric metrics are omitted and daily gaps remain null. "

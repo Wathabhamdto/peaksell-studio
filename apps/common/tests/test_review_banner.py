@@ -9,6 +9,7 @@ is a timestamp on the user, and the next login's ``last_login`` overtakes it.
 import tempfile
 from io import BytesIO
 
+from django.conf import settings
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.contrib.sessions.backends.db import SessionStore
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -25,10 +26,30 @@ from apps.social_accounts.models import SocialAccount
 from apps.workspaces.models import Workspace
 
 # The card's class also appears in base.html's pre-paint CSS, so match its copy.
-BANNER = "Enjoying BrightBean?"
-TRUSTPILOT_URL = "https://www.trustpilot.com/review/brightbean.xyz"
+BANNER = f"Enjoying {settings.BRAND['name']}?"
+TRUSTPILOT_URL = "https://www.trustpilot.com/review/example.com"
 
 
+class ReviewBannerDisabledTests(TestCase):
+    """With no BRAND_REVIEW_URL configured the card never shows."""
+
+    @override_settings(BRAND={**settings.BRAND, "review_url": ""})
+    def test_hidden_without_review_url(self):
+        user = User.objects.create_user(email="o@example.com", password="testpass123", tos_accepted_at=timezone.now())
+        org = Organization.objects.create(name="Org")
+        OrgMembership.objects.create(user=user, organization=org, org_role=OrgMembership.OrgRole.OWNER)
+        ws = Workspace.objects.create(organization=org, name="WS", timezone="Europe/Berlin")
+        WorkspaceMembership.objects.create(user=user, workspace=ws, workspace_role=WorkspaceMembership.WorkspaceRole.OWNER)
+        SocialAccount.objects.create(
+            workspace=ws, platform="linkedin_personal", account_platform_id="li-1", account_name="Channel",
+            connection_status=SocialAccount.ConnectionStatus.CONNECTED,
+        )
+        self.client.force_login(user)
+        resp = self.client.get(reverse("social_accounts:list", kwargs={"workspace_id": ws.id}))
+        self.assertNotContains(resp, BANNER)
+
+
+@override_settings(BRAND={**settings.BRAND, "review_url": TRUSTPILOT_URL})
 class ReviewBannerTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
