@@ -1,0 +1,60 @@
+# PeakSell production behind Cloudflare Tunnel.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml -f docker-compose.tunnel.yml up -d --build
+#
+# Same command on the Windows PC (temporary) and on the VPS (permanent). The
+# public hostname (studio.peaksell.agency) lives in the Cloudflare tunnel, so
+# moving hosts = stop here, start there with the same .env. No DNS change, no
+# app re-registration.
+#
+# Nothing is published on the host: no 80/443 (Cloudflare terminates TLS),
+# no 5432 (the base file exposes Postgres for local dev only).
+#
+# Needs in .env: CLOUDFLARE_TUNNEL_TOKEN, POSTGRES_PASSWORD.
+# In the Cloudflare dashboard the tunnel's public hostname must point to
+# service http://caddy:80.
+
+services:
+  migrate:
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.production
+      - DATABASE_URL=postgres://postgres:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@postgres:5432/peaksell
+
+  app:
+    # Loopback only (for health checks from the host); never reachable from outside.
+    ports: !override
+      - "127.0.0.1:8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.production
+      - DATABASE_URL=postgres://postgres:${POSTGRES_PASSWORD}@postgres:5432/peaksell
+      - MALLOC_ARENA_MAX=2
+    restart: unless-stopped
+
+  worker:
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.production
+      - DATABASE_URL=postgres://postgres:${POSTGRES_PASSWORD}@postgres:5432/peaksell
+      - MALLOC_ARENA_MAX=2
+    restart: unless-stopped
+
+  postgres:
+    ports: !reset []
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    restart: unless-stopped
+
+  caddy:
+    ports: !reset []
+    environment:
+      # Plain HTTP on :80 for any host: Cloudflare already did TLS.
+      - APP_DOMAIN=:80
+      - CADDY_MEDIA_ROOT=${CADDY_MEDIA_ROOT:-/app/media}
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN:?set CLOUDFLARE_TUNNEL_TOKEN in .env}
+    depends_on:
+      - caddy
+    restart: unless-stopped

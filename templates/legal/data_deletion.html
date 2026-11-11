@@ -1,0 +1,26 @@
+{% extends "legal/base_legal.html" %}
+{% block title %}Data Deletion{% endblock %}
+{% block heading %}Data Deletion Instructions{% endblock %}
+{% block body %}
+{% brand "legal_entity" as entity %}{% brand "product_name" as product %}{% brand "support_email" as email %}
+<p>You can remove the data {{ product }} holds about you or your social accounts in any of these ways:</p>
+
+<h2>1. Disconnect a social account</h2>
+<p>In the Service, open <strong>Channels</strong>, choose the account, and select <strong>Disconnect</strong>. Its access token is deleted immediately, along with the analytics, comments, and messages copied for that account.</p>
+
+<h2>2. Remove access from the platform</h2>
+<ul>
+    <li><strong>Facebook / Instagram:</strong> Facebook Settings &rsaquo; Security and login / Business Integrations (or Apps and Websites) &rsaquo; remove {{ product }}.</li>
+    <li><strong>YouTube / Google:</strong> <a href="https://security.google.com/settings/security/permissions" target="_blank" rel="noopener">Google security settings</a> &rsaquo; remove {{ product }}.</li>
+    <li><strong>TikTok:</strong> TikTok app &rsaquo; Settings and privacy &rsaquo; Security &rsaquo; Apps and services permissions &rsaquo; remove {{ product }}.</li>
+</ul>
+<p>Once access is revoked the Service can no longer read or publish to that account, and its stored data for that account is deleted.</p>
+
+<h2>3. Delete your user account</h2>
+<p>In the Service, go to <strong>Settings &rsaquo; Profile &rsaquo; Delete account</strong>. Your personal data is permanently deleted.</p>
+
+<h2>4. Ask us</h2>
+<p>Email <a href="mailto:{{ email }}">{{ email }}</a> from the address on your account, or name the social account concerned. We confirm and complete deletion within 30 days.</p>
+
+<p class="mt-6">{{ entity }}</p>
+{% endblock %}

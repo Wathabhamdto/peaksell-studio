@@ -34,8 +34,13 @@ BRAND = {
     "logo": env("BRAND_LOGO", default="img/peaksell-logo.png"),
     "website": env("BRAND_WEBSITE", default="https://www.peaksell.agency"),
     "support_email": env("BRAND_SUPPORT_EMAIL", default="support@peaksell.agency"),
-    "terms_url": env("BRAND_TERMS_URL", default="https://www.peaksell.agency/terms-of-service/"),
-    "privacy_url": env("BRAND_PRIVACY_URL", default="https://www.peaksell.agency/privacy-policy/"),
+    # Legal entity named on the built-in /legal/ pages (privacy, terms, data deletion).
+    "legal_entity": env("BRAND_LEGAL_ENTITY", default="PeakSell Agency"),
+    # Default to the built-in pages so app registrations (Meta, Google, TikTok)
+    # have stable URLs on the Studio domain itself.
+    "terms_url": env("BRAND_TERMS_URL", default=f"{APP_URL.rstrip('/')}/legal/terms/"),
+    "privacy_url": env("BRAND_PRIVACY_URL", default=f"{APP_URL.rstrip('/')}/legal/privacy/"),
+    "data_deletion_url": env("BRAND_DATA_DELETION_URL", default=f"{APP_URL.rstrip('/')}/legal/data-deletion/"),
     # Empty hides the "Enjoying ...? Leave a review" banner.
     "review_url": env("BRAND_REVIEW_URL", default=""),
     "source_url": env("BRAND_SOURCE_URL", default="https://github.com/Wathabhamdto/peaksell-studio"),

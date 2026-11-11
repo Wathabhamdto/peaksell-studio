@@ -1,3 +1,13 @@
+{
+    # Behind Cloudflare Tunnel (docker-compose.tunnel.yml) TLS ends at
+    # Cloudflare and cloudflared reaches Caddy over the private Docker network.
+    # Trust X-Forwarded-* from private ranges so Django still sees
+    # X-Forwarded-Proto: https; otherwise SECURE_SSL_REDIRECT loops forever.
+    servers {
+        trusted_proxies static private_ranges
+    }
+}
+
 {$APP_DOMAIN:localhost} {
     # Uploaded media (STORAGE_BACKEND=local) lives on the media_data volume,
     # which docker-compose.prod.yml mounts read-only here. Serving it from

@@ -218,3 +218,6 @@ theme/static/css/dist/
 # Local seed scripts (not for version control)
 /seed_ad_analytics.py
 /seed_ad_calendar.py
+
+# PeakSell deploy bundle (DB dump, media, .env secrets)
+deploy/bundle/

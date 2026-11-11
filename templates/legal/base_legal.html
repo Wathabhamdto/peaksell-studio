@@ -1,0 +1,38 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - {% brand "product_name" %}</title>
+    <link rel="icon" href="{% static 'favicon/favicon.ico' %}" sizes="any">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
+    <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
+    <style>
+        .legal h2 { font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; margin: 2rem 0 0.5rem; color: var(--text-primary); }
+        .legal p, .legal li { font-size: 0.9375rem; line-height: 1.7; color: var(--text-secondary); }
+        .legal ul { list-style: disc; padding-left: 1.25rem; margin: 0.5rem 0; }
+        .legal a { color: var(--primary); text-decoration: underline; }
+    </style>
+</head>
+<body style="background: var(--surface-page); font-family: var(--font-body);">
+<main class="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+    <header class="flex items-center gap-3 mb-8">
+        <img src="{% brand "logo" as brand_logo %}{% static brand_logo %}" alt="" class="w-10 h-10 object-contain">
+        <div>
+            <p class="text-xs font-semibold uppercase tracking-widest" style="color: var(--primary);">{% brand "product_name" %}</p>
+            <h1 class="text-2xl font-bold tracking-tight" style="color: var(--text-primary); font-family: var(--font-display);">{% block heading %}{% endblock %}</h1>
+        </div>
+    </header>
+    <article class="legal rounded-2xl bg-white p-6 sm:p-10" style="border: 1px solid var(--border);">
+        <p class="text-xs" style="color: var(--text-tertiary);">Last updated: November 11, 2026</p>
+        {% block body %}{% endblock %}
+    </article>
+    <footer class="mt-6 text-xs flex flex-wrap gap-4" style="color: var(--text-tertiary);">
+        <a href="{% url 'legal_privacy' %}" class="underline">Privacy Policy</a>
+        <a href="{% url 'legal_terms' %}" class="underline">Terms of Service</a>
+        <a href="{% url 'legal_data_deletion' %}" class="underline">Data Deletion</a>
+        <a href="mailto:{% brand "support_email" %}" class="underline">{% brand "support_email" %}</a>
+    </footer>
+</main>
+</body>
+</html>
